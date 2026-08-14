@@ -1,8 +1,7 @@
 (() => {
-  const sections = [...document.querySelectorAll('main > section[id]')].filter(s => s.id && !['secret'].includes(s.id));
+  const sections = [...document.querySelectorAll('main > section[id]')].filter(s => s.id && s.id !== 'secret');
   if (!sections.length) return;
 
-  // Unusual editorial navigation: compact section index on desktop.
   const rail = document.createElement('nav');
   rail.className = 'rv-rail';
   rail.setAttribute('aria-label', 'Universe index');
@@ -27,7 +26,6 @@
   }, { threshold: 0.38 });
   sections.forEach(section => observer.observe(section));
 
-  // Editorial relationship stats; appears in the hero without removing any existing copy.
   const hero = document.querySelector('#home');
   if (hero && !hero.querySelector('.rv-stats')) {
     const stats = document.createElement('div');
@@ -36,11 +34,10 @@
       <div class="rv-stat"><b>∞</b><span>still growing</span></div>
       <div class="rv-stat"><b>06</b><span>memories captured</span></div>
       <div class="rv-stat"><b>02</b><span>little worlds</span></div>
-      <div class="rv-stat"><b>1</b><span>universe</span></div>`;
+      <div class="rv-stat"><b>01</b><span>shared universe</span></div>`;
     hero.append(stats);
   }
 
-  // Layered light sweep on key editorial chapters.
   document.querySelectorAll('.hero,.archive,.universe,.future').forEach(section => {
     if (section.querySelector('.rv-sheen')) return;
     const sheen = document.createElement('div');
@@ -49,7 +46,6 @@
     section.append(sheen);
   });
 
-  // Cursor microcopy on interactive elements, desktop only.
   const finePointer = matchMedia('(pointer:fine)').matches;
   if (finePointer && !document.querySelector('.rv-cursor-label')) {
     const label = document.createElement('div');
@@ -68,11 +64,9 @@
     });
   }
 
-  // Page-aware document title; reinforces the feeling of moving through chapters.
   const baseTitle = document.title;
-  observer.disconnect();
   const titleObserver = new IntersectionObserver(entries => {
-    const visible = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+    const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
     if (!visible) return;
     const id = visible.target.id;
     const pretty = id === 'home' ? 'Isira ♥ Michelle' : id.replaceAll('-', ' ');
