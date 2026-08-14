@@ -1,0 +1,22 @@
+/* Living Universe expansion — additive only. Existing styles remain untouched. */
+#ambient-layer{position:fixed;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+.ambient-petal,.ambient-firefly,.ambient-spark{position:absolute;pointer-events:none;will-change:transform,opacity}
+.ambient-petal{top:-8vh;width:14px;height:10px;border-radius:100% 0 100% 0;background:linear-gradient(135deg,#fff4f8,#f2a7c5 55%,#c86c9d);filter:drop-shadow(0 0 5px #f8b6d455);opacity:.82;animation:petal-fall var(--fall,10s) linear forwards;}
+.ambient-petal::after{content:"";position:absolute;inset:2px 5px;border-radius:50%;background:#fff8;transform:rotate(35deg)}
+.ambient-firefly{width:5px;height:5px;border-radius:50%;background:#ffeab0;box-shadow:0 0 8px 3px #ffd97899,0 0 20px 5px #ffd97833;opacity:0;animation:firefly-drift var(--life,7s) ease-in-out forwards}
+.ambient-spark{width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 10px 3px #ffffff88;animation:spark-rise var(--rise,3s) ease-out forwards}
+.heart-burst{position:fixed;z-index:50;font-size:18px;color:#ffb7d1;text-shadow:0 0 15px #ff7fb0;animation:heart-burst 900ms ease-out forwards;pointer-events:none}
+.cursor-orb{position:fixed;z-index:49;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 0 18px 7px #cda8ff55;mix-blend-mode:screen;pointer-events:none;transform:translate(-50%,-50%);opacity:.55}
+.memory.tilt-ready{transform-style:preserve-3d;transition:transform .25s ease,box-shadow .25s ease;will-change:transform}.memory.tilt-ready:hover{box-shadow:0 25px 70px #0008}
+.aurora-layer{position:absolute;inset:-20%;overflow:hidden;pointer-events:none;opacity:.34;mix-blend-mode:screen}.aurora-layer::before,.aurora-layer::after{content:"";position:absolute;inset:10% -10%;background:linear-gradient(115deg,transparent 20%,#9a7cff18 38%,#6de3d01c 50%,#ff9fc71a 62%,transparent 80%);filter:blur(35px);transform:rotate(-7deg);animation:aurora-drift 18s ease-in-out infinite alternate}.aurora-layer::after{animation-duration:25s;animation-direction:alternate-reverse;opacity:.65}
+.moon-halo{position:absolute;width:220px;height:220px;border-radius:50%;border:1px solid #ffffff12;box-shadow:0 0 80px #b9a7ff16;pointer-events:none;animation:halo-pulse 7s ease-in-out infinite}
+.living-badge{position:fixed;right:18px;bottom:18px;z-index:40;padding:8px 11px;border:1px solid #ffffff14;background:#08070ecc;backdrop-filter:blur(12px);border-radius:999px;color:#a9a1b4;font:9px 'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;opacity:0;transform:translateY(8px);transition:.35s}.living-badge.show{opacity:1;transform:none}.living-badge b{color:#f5c9dd;font-weight:500}
+body.motion-off .ambient-petal,body.motion-off .ambient-firefly,body.motion-off .ambient-spark,body.motion-off .cursor-orb{display:none}
+@keyframes petal-fall{0%{transform:translate3d(0,-10vh,0) rotate(0deg) scale(var(--scale,.8));opacity:0}8%{opacity:var(--opacity,.8)}30%{transform:translate3d(calc(var(--sway)*.4),30vh,0) rotate(130deg) scale(var(--scale,.8))}65%{transform:translate3d(calc(var(--sway)*-.6),68vh,0) rotate(250deg) scale(var(--scale,.8))}100%{transform:translate3d(var(--sway),112vh,0) rotate(390deg) scale(var(--scale,.8));opacity:0}}
+@keyframes firefly-drift{0%{transform:translate3d(0,0,0) scale(.4);opacity:0}15%{opacity:.8}50%{transform:translate3d(var(--dx),var(--dy),0) scale(1)}85%{opacity:.25}100%{transform:translate3d(calc(var(--dx)*-.4),calc(var(--dy)*1.15),0) scale(.3);opacity:0}}
+@keyframes spark-rise{0%{transform:translateY(0) scale(.3);opacity:0}15%{opacity:.9}100%{transform:translate(var(--dx),-90px) scale(0);opacity:0}}
+@keyframes heart-burst{0%{transform:translate(-50%,-50%) scale(.4) rotate(-8deg);opacity:0}20%{opacity:1}100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.4) rotate(var(--rot));opacity:0}}
+@keyframes aurora-drift{from{transform:translateX(-8%) rotate(-7deg) scale(1)}to{transform:translateX(8%) rotate(-4deg) scale(1.12)}}
+@keyframes halo-pulse{0%,100%{transform:scale(.96);opacity:.55}50%{transform:scale(1.04);opacity:1}}
+@media(max-width:700px){.living-badge{right:10px;bottom:10px}.ambient-petal{width:11px;height:8px}.cursor-orb{display:none}}
+@media(prefers-reduced-motion:reduce){.ambient-petal,.ambient-firefly,.ambient-spark,.aurora-layer::before,.aurora-layer::after,.moon-halo{animation:none!important}.ambient-petal,.ambient-firefly,.ambient-spark{display:none!important}}
