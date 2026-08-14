@@ -22,15 +22,12 @@
   function cinematic() { const target=document.querySelector('#memories'); if(document.startViewTransition && !state.reduced){document.startViewTransition(()=>target?.scrollIntoView({behavior:'instant',block:'center'}));}else target?.scrollIntoView({behavior:state.reduced?'auto':'smooth',block:'center'});discover(); }
   async function share() { const data={title:'Our Little Universe',text:'A little universe made from memories, dreams and love.',url:location.href};try{if(navigator.share && (!navigator.canShare || navigator.canShare(data))){await navigator.share(data);discover()}else{await navigator.clipboard?.writeText(location.href);toast('Universe link copied ✦')}}catch(e){} }
   panel.addEventListener('click',(e)=>{const a=e.target.closest('[data-lu]')?.dataset.lu;if(!a)return;if(a==='wish')wishJar();if(a==='rose')plantRose();if(a==='butterfly')butterfly();if(a==='star')memoryStar();if(a==='meteor')meteor();if(a==='transition')cinematic();if(a==='share')share()});
-  // Existing buttons gain a gentle love response without replacing their handlers.
   document.addEventListener('click',(e)=>{const hit=e.target.closest('.memory,.letter-stage,.dreams button,.value-orbit button,.fact-pills button,.signs button,#leaveStar,#roomCat');if(hit){discover();if(!state.reduced)heartBloom(e.clientX,e.clientY)}},{passive:true});
-  // View transitions for same-document navigation when available; ordinary anchors remain the fallback.
   document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',(e)=>{if(state.reduced||!document.startViewTransition)return;const id=a.getAttribute('href');const target=document.querySelector(id);if(!target)return;e.preventDefault();document.startViewTransition(()=>target.scrollIntoView({behavior:'instant',block:'start'}));},{passive:false}));
-  // Keep background effects cheap and stop this layer when the document is hidden.
-  document.addEventListener('visibilitychange',()=>{state.hidden=document.hidden;panel.classList.toggle('show',!document.hidden && panel.classList.contains('show'));});
+  document.addEventListener('visibilitychange',()=>{state.hidden=document.hidden});
   reduced.addEventListener?.('change',()=>{state.reduced=reduced.matches;root.classList.toggle('motion-off',state.reduced)});
   setTimeout(()=>{if(!document.hidden)panel.classList.add('show')},6500);setTimeout(()=>panel.classList.remove('show'),12500);
-  // Rare ambient butterfly/meteor events, never more often than once per minute.
-  setInterval(()=>{if(document.hidden||state.reduced)return;if(Math.random()<.18)butterfly();},60000);
-  setInterval(()=>{if(document.hidden||state.reduced)return;if(Math.random()<.12)meteor();},75000);
+  setInterval(()=>{if(document.hidden||state.reduced)return;if(Math.random()<.18)butterfly()},60000);
+  setInterval(()=>{if(document.hidden||state.reduced)return;if(Math.random()<.12)meteor()},75000);
+  import('./revelatio-vibe.js').catch(()=>{});
 })();
